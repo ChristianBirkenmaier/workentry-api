@@ -45,11 +45,32 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { category } = req.body;
+        const updated = await Category.findOneAndUpdate(
+            id,
+            { category },
+            { new: true }
+        );
+        res.json({ ok: true, data: updated });
+    } catch (err) {
+        console.error(err);
+        res.json({ ok: false, error: err });
+    }
     // Vorhandenen Zeiteintrag aktualisieren
 });
 
-router.delete("/:id", () => {
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Category.deleteOne(id);
+        res.json({ ok: true });
+    } catch (err) {
+        console.error(err);
+        res.json({ ok: false, error: err });
+    }
     // Vorhandenen Zeiteintrag löschen
 });
 

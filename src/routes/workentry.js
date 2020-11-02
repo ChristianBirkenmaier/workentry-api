@@ -59,11 +59,43 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const {
+            project,
+            category,
+            fromDate,
+            untilDate,
+            optionalText,
+        } = req.body;
+        const updated = await Workentry.findOneAndUpdate(
+            id,
+            {
+                project,
+                category,
+                fromDate,
+                untilDate,
+                optionalText,
+            },
+            { new: true }
+        );
+        res.json({ ok: true, data: updated });
+    } catch (err) {
+        console.error(err);
+        res.json({ ok: false, error: err });
+    }
     // Vorhandenen Zeiteintrag aktualisieren
 });
 
-router.delete("/:id", () => {
+router.delete("/:id", async (req, res) => {
+    try {
+        await Workentry.deleteOne(id);
+        res.json({ ok: true });
+    } catch (err) {
+        console.error(err);
+        res.json({ ok: false, error: err });
+    }
     // Vorhandenen Zeiteintrag löschen
 });
 
