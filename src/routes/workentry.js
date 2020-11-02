@@ -70,7 +70,7 @@ router.put("/:id", async (req, res) => {
             optionalText,
         } = req.body;
         const updated = await Workentry.findOneAndUpdate(
-            id,
+            { _id: id },
             {
                 project,
                 category,

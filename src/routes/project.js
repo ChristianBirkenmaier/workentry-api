@@ -50,7 +50,7 @@ router.put("/:id", async (req, res) => {
         const { id } = req.params;
         const { project } = req.body;
         const updated = await Project.findOneAndUpdate(
-            id,
+            { _id: id },
             { project },
             { new: true }
         );

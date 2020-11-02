@@ -50,7 +50,7 @@ router.put("/:id", async (req, res) => {
         const { id } = req.params;
         const { category } = req.body;
         const updated = await Category.findOneAndUpdate(
-            id,
+            { _id: id },
             { category },
             { new: true }
         );
