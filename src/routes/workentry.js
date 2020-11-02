@@ -8,8 +8,8 @@ router.get("/", async (req, res) => {
     console.log("/");
     try {
         const workentries = await Workentry.find().populate(
-            "projectName",
-            "categoryName"
+            "categoryName",
+            "projectName"
         );
         res.json({ ok: true, data: workentries });
     } catch (err) {
