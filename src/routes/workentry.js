@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Workentry } = require("../models");
+const mongoose = require("mongoose");
 
 // define the home page route
 router.get("/", async (req, res) => {
@@ -34,14 +35,14 @@ router.post("/", async (req, res) => {
             categoryName,
             fromDate,
             untilDate,
-            comment,
+            optionalText,
         } = req.body;
         const newWorkentry = await Workentry.create({
-            projectName,
-            categoryName,
+            projectName: mongoose.Types.ObjectId(projectName),
+            categoryName: mongoose.Types.ObjectId(categoryName),
             fromDate,
             untilDate,
-            comment,
+            optionalText,
         });
         console.log(req.body);
         res.json({
