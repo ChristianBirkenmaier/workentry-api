@@ -7,7 +7,10 @@ const mongoose = require("mongoose");
 router.get("/", async (req, res) => {
     console.log("/");
     try {
-        const workentries = await Workentry.find();
+        const workentries = await Workentry.find().populate(
+            "projectName",
+            "categoryName"
+        );
         res.json({ ok: true, data: workentries });
     } catch (err) {
         console.error("Error: ", err);
@@ -20,7 +23,10 @@ router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         // Zeiteintrag mit bestimmter id zurückgeben
-        const workentry = await Workentry.find({ id });
+        const workentry = await Workentry.find(id).populate(
+            "projectName",
+            "categoryName"
+        );
         return res.json({ ok: true, data: workentry });
     } catch (err) {
         console.error("Error: ", err);
