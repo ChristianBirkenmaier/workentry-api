@@ -31,9 +31,9 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     // Neuen Zeiteintrag erstellen
     try {
-        const { projectName } = req.body;
+        const { project } = req.body;
         const newProject = await Project.create({
-            projectName,
+            project,
         });
         res.json({
             ok: true,

@@ -8,8 +8,8 @@ router.get("/", async (req, res) => {
     console.log("/");
     try {
         const workentries = await Workentry.find().populate(
-            "categoryName",
-            "projectName"
+            "category",
+            "project"
         );
         res.json({ ok: true, data: workentries });
     } catch (err) {
@@ -24,8 +24,8 @@ router.get("/:id", async (req, res) => {
         const { id } = req.params;
         // Zeiteintrag mit bestimmter id zurückgeben
         const workentry = await Workentry.find(id).populate(
-            "projectName",
-            "categoryName"
+            "project",
+            "category"
         );
         return res.json({ ok: true, data: workentry });
     } catch (err) {
@@ -37,15 +37,15 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const {
-            projectName,
-            categoryName,
+            project,
+            category,
             fromDate,
             untilDate,
             optionalText,
         } = req.body;
         const newWorkentry = await Workentry.create({
-            projectName: mongoose.Types.ObjectId(projectName),
-            categoryName: mongoose.Types.ObjectId(categoryName),
+            project: mongoose.Types.ObjectId(project),
+            category: mongoose.Types.ObjectId(category),
             fromDate,
             untilDate,
             optionalText,

@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const workentrySchema = new Schema({
-    categoryName: { type: Schema.Types.ObjectId, ref: "Category" },
-    projectName: { type: Schema.Types.ObjectId, ref: "Project" },
+    category: { type: Schema.Types.ObjectId, ref: "Category" },
+    project: { type: Schema.Types.ObjectId, ref: "Project" },
     fromDate: String,
     untilDate: String,
     optionalText: String,

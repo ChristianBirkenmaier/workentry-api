@@ -31,9 +31,9 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     // Neuen Zeiteintrag erstellen
     try {
-        const { categoryName } = req.body;
+        const { category } = req.body;
         const newCategory = await Category.create({
-            categoryName,
+            category,
         });
         res.json({
             ok: true,
