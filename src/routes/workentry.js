@@ -90,7 +90,8 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-        await Workentry.deleteOne(id);
+        const { id } = req.params;
+        await Workentry.deleteOne({ _id: id });
         res.json({ ok: true });
     } catch (err) {
         console.error(err);

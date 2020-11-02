@@ -65,7 +65,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        await Category.deleteOne(id);
+        await Category.deleteOne({ _id: id });
         res.json({ ok: true });
     } catch (err) {
         console.error(err);
