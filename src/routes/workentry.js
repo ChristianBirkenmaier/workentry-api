@@ -6,9 +6,8 @@ const { Workentry } = require("../models");
 router.get("/", async (req, res) => {
     console.log("/");
     try {
-
         const workentries = await Workentry.find();
-        res.json({ok:true, data: workentries});
+        res.json({ ok: true, data: workentries });
     } catch (err) {
         console.error("Error: ", err);
         res.json({ ok: false, error: err });
@@ -16,13 +15,12 @@ router.get("/", async (req, res) => {
     // Alle Zeiteinträge zurückgeben
 });
 // define the about route
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
-
         const { id } = req.params;
         // Zeiteintrag mit bestimmter id zurückgeben
-        const workentry = await Workentry.find({id});
-        return res.json({ok:true, data: workentry})
+        const workentry = await Workentry.find({ id });
+        return res.json({ ok: true, data: workentry });
     } catch (err) {
         console.error("Error: ", err);
         res.json({ ok: false, error: err });
