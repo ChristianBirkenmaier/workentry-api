@@ -48,10 +48,12 @@ router.post("/", async (req, res) => {
             untilDate,
             optionalText,
         });
-        console.log(req.body);
+        const resp = await Workentry.find(newWorkentry._id)
+            .populate("category")
+            .populate("project");
         res.json({
             ok: true,
-            data: newWorkentry,
+            data: resp,
         });
     } catch (err) {
         console.error("Error: ", err);
