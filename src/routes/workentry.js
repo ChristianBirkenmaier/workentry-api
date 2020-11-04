@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         // Zeiteintrag mit bestimmter id zurückgeben
-        const workentry = await Workentry.find(id)
+        const workentry = await Workentry.findOne(id)
             .populate("category")
             .populate("project");
         return res.json({ ok: true, data: workentry });
