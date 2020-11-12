@@ -71,7 +71,7 @@ router.put("/:id", async (req, res) => {
             untilDate,
             optionalText,
         } = req.body;
-        const updated = await Workentry.findOneAndUpdate(
+        let updated = await Workentry.findOneAndUpdate(
             { _id: id },
             {
                 project,
@@ -82,7 +82,10 @@ router.put("/:id", async (req, res) => {
             },
             { new: true }
         );
-        res.json({ ok: true, data: updated });
+        const resp = await Workentry.find(updated._id)
+            .populate("category")
+            .populate("project");
+        res.json({ ok: true, data: resp });
     } catch (err) {
         console.error(err);
         res.json({ ok: false, error: err });
