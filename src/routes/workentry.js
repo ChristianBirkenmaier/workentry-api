@@ -35,18 +35,20 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const {
-            project,
-            category,
-            fromDate,
-            untilDate,
-            optionalText,
+            project = null,
+            category = null,
+            fromDate = "",
+            untilDate = "",
+            optionalText = "",
+            external = null,
         } = req.body;
         const newWorkentry = await Workentry.create({
             project: mongoose.Types.ObjectId(project),
             category: mongoose.Types.ObjectId(category),
-            fromDate,
-            untilDate,
-            optionalText,
+            fromDate: fromDate,
+            untilDate: untilDate,
+            optionalText: optionalText,
+            external: external,
         });
         const resp = await Workentry.find(newWorkentry._id)
             .populate("category")
@@ -65,11 +67,12 @@ router.put("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            project,
-            category,
-            fromDate,
-            untilDate,
-            optionalText,
+            project = null,
+            category = null,
+            fromDate = "",
+            untilDate = "",
+            optionalText = "",
+            external = null,
         } = req.body;
         let updated = await Workentry.findOneAndUpdate(
             { _id: id },
@@ -79,6 +82,7 @@ router.put("/:id", async (req, res) => {
                 fromDate,
                 untilDate,
                 optionalText,
+                external,
             },
             { new: true }
         );

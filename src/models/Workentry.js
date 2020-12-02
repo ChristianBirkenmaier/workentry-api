@@ -7,6 +7,7 @@ const workentrySchema = new Schema({
     fromDate: String,
     untilDate: String,
     optionalText: String,
+    external: Boolean,
 });
 
 module.exports = mongoose.model("Workentry", workentrySchema);
