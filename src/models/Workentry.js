@@ -6,6 +6,9 @@ const workentrySchema = new Schema({
     project: { type: Schema.Types.ObjectId, ref: "Project" },
     fromDate: String,
     untilDate: String,
+    date: String,
+    start: String,
+    end: String,
     optionalText: String,
     external: Boolean,
 });

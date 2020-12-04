@@ -41,6 +41,9 @@ router.post("/", async (req, res) => {
             untilDate = "",
             optionalText = "",
             external = null,
+            date = "",
+            start = "",
+            end = "",
         } = req.body;
         const newWorkentry = await Workentry.create({
             project: mongoose.Types.ObjectId(project),
@@ -49,6 +52,9 @@ router.post("/", async (req, res) => {
             untilDate: untilDate,
             optionalText: optionalText,
             external: external,
+            date,
+            start,
+            end,
         });
         const resp = await Workentry.find(newWorkentry._id)
             .populate("category")
@@ -73,6 +79,9 @@ router.put("/:id", async (req, res) => {
             untilDate = "",
             optionalText = "",
             external = null,
+            date = "",
+            start = "",
+            end = "",
         } = req.body;
         let updated = await Workentry.findOneAndUpdate(
             { _id: id },
@@ -83,6 +92,9 @@ router.put("/:id", async (req, res) => {
                 untilDate,
                 optionalText,
                 external,
+                date,
+                start,
+                end,
             },
             { new: true }
         );
