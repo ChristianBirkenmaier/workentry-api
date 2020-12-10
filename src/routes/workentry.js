@@ -2,19 +2,42 @@ const express = require("express");
 const router = express.Router();
 const { Workentry } = require("../models");
 const mongoose = require("mongoose");
+const {
+    workentryHandlers: { get, getAll },
+} = require("../handlers");
+const { query } = require("express");
 
 // define the home page route
 router.get("/", async (req, res) => {
-    console.log("/");
-    try {
-        const workentries = await Workentry.find()
-            .populate("category")
-            .populate("project");
-        res.json({ ok: true, data: workentries });
-    } catch (err) {
-        console.error("Error: ", err);
-        res.json({ ok: false, error: err });
+    let { limit, skip, ...filter } = req.query;
+    limit = parseInt(limit);
+    skip = parseInt(skip);
+    console.log(filter, limit, skip);
+
+    if (limit || skip) {
+        const result = await get(limit, skip, filter);
+        if (result.ok) {
+            return res.json(result);
+        } else {
+            return res.status(500).json(result);
+        }
+    } else {
+        const result = await getAll(req, res);
+        if (result.ok) {
+            return res.json(result);
+        } else {
+            return res.status(500).json(result);
+        }
     }
+    // try {
+    //     const workentries = await Workentry.find()
+    //         .populate("category")
+    //         .populate("project");
+    //     res.json({ ok: true, data: workentries });
+    // } catch (err) {
+    //     console.error("Error: ", err);
+    //     res.json({ ok: false, error: err });
+    // }
     // Alle Zeiteinträge zurückgeben
 });
 // define the about route
