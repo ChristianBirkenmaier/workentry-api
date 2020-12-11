@@ -10,35 +10,13 @@ const { query } = require("express");
 // define the home page route
 router.get("/", async (req, res) => {
     let { limit, skip, ...filter } = req.query;
-    limit = parseInt(limit);
-    skip = parseInt(skip);
-    console.log(filter, limit, skip);
 
-    if (limit || skip) {
-        const result = await get(limit, skip, filter);
-        if (result.ok) {
-            return res.json(result);
-        } else {
-            return res.status(500).json(result);
-        }
+    const result = await get(limit, skip, filter);
+    if (result.ok) {
+        return res.json(result);
     } else {
-        const result = await getAll(req, res);
-        if (result.ok) {
-            return res.json(result);
-        } else {
-            return res.status(500).json(result);
-        }
+        return res.status(500).json(result);
     }
-    // try {
-    //     const workentries = await Workentry.find()
-    //         .populate("category")
-    //         .populate("project");
-    //     res.json({ ok: true, data: workentries });
-    // } catch (err) {
-    //     console.error("Error: ", err);
-    //     res.json({ ok: false, error: err });
-    // }
-    // Alle Zeiteinträge zurückgeben
 });
 // define the about route
 router.get("/:id", async (req, res) => {

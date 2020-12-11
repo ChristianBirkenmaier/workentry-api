@@ -14,6 +14,8 @@ async function getAll() {
 }
 
 async function get(limit = 0, skip = 0, filter = {}) {
+    limit = parseInt(limit);
+    skip = parseInt(skip);
     // return await Workentry.aggregate([
     //     { $match: {} },
     //     { $skip: skip },
@@ -25,6 +27,7 @@ async function get(limit = 0, skip = 0, filter = {}) {
             .limit(limit)
             .populate("category")
             .populate("project");
+        console.log("workentries", workentries.length);
         return { ok: true, data: workentries };
     } catch (err) {
         console.error("error", err);
